@@ -1,0 +1,2 @@
+# Build Issues:
+When building for Python 3.10 or higher, the `Py_REFCNT` macro no longer can be used as an l-value in c++, outlined [here](https://bugs.python.org/issue39573). See [this](https://bugs.launchpad.net/brz/+bug/1904868) similar issue and steps to resolve.

@@ -1,11 +1,9 @@
 import numpy as np
-import ur3e_ikfast
 import ur5_ikfast
 
 # Initialize kinematics for UR5 robot arm
-ur3e_kin = ur3e_ikfast.PyKinematics()
-ur5_kin = ur5_ikfast.PyKinematics()
-n_joints = ur3e_kin.getDOF()
+ur5_kin = ur5_ikfast.PyKinematics("ur5")
+n_joints = ur5_kin.getDOF()
 
 joint_angles = [-3.1, -1.6, 1.6, -1.6, -1.6, 0.]  # in radians
 
@@ -13,7 +11,7 @@ joint_angles = [-3.1, -1.6, 1.6, -1.6, -1.6, 0.]  # in radians
 print("\nTesting forward kinematics:\n")
 print("Joint angles:")
 print(joint_angles)
-ee_pose = ur3e_kin.forward(joint_angles)
+ee_pose = ur5_kin.forward(joint_angles)
 ee_pose = np.asarray(ee_pose).reshape(3, 4)  # 3x4 rigid transformation matrix
 print("\nEnd effector pose:")
 print(ee_pose)
@@ -21,7 +19,9 @@ print("\n-----------------------------")
 
 # Test inverse kinematics: get joint angles from end effector pose
 print("\nTesting inverse kinematics:\n")
-joint_configs = ur3e_kin.inverse(ee_pose.reshape(-1).tolist())
+inverse_input = ee_pose.reshape(-1).tolist()
+print(f"inverse input {inverse_input}")
+joint_configs = ur5_kin.inverse(inverse_input)
 n_solutions = int(len(joint_configs)/n_joints)
 print("%d solutions found:" % (n_solutions))
 joint_configs = np.asarray(joint_configs).reshape(n_solutions, n_joints)

@@ -1779,9 +1779,11 @@ static void __pyx_tp_dealloc_10ur5_ikfast_PyKinematics(PyObject *o) {
   {
     PyObject *etype, *eval, *etb;
     PyErr_Fetch(&etype, &eval, &etb);
-    ++Py_REFCNT(o);
+    __Pyx_INCREF(o);
+    // ++(*Py_REFCNT(o));
     __pyx_pw_10ur5_ikfast_12PyKinematics_3__dealloc__(o);
-    --Py_REFCNT(o);
+    // --(*Py_REFCNT(o));
+    Py_DECREF(o);
     PyErr_Restore(etype, eval, etb);
   }
   (*Py_TYPE(o)->tp_free)(o);
